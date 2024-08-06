@@ -1,6 +1,9 @@
 package org.programing.microservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.NullSerializer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +26,10 @@ public class User {
     private Long id;
     private String fullName;
     private String email;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
     private USER_ROLE role = USER_ROLE.ROLE_CUSTOMER;
 
     @JsonIgnore

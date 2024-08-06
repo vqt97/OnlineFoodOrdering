@@ -24,13 +24,13 @@ public class AppConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(Authorize -> Authorize
-                        .requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_ONWER", "ADMIN")
+                        .requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_OWNER", "ADMIN")
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll()
                 ).addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors-> cors.configurationSource(corsConfigrationSource()));
-        return null;
+        return http.build();
     }
 
     private CorsConfigurationSource corsConfigrationSource() {
@@ -39,7 +39,7 @@ public class AppConfig {
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                     CorsConfiguration cfg = new CorsConfiguration();
                     cfg.setAllowedOrigins(Arrays.asList(
-                            "http://localhost:3000"
+                            "http://localhost:5454"
                     ));
                     cfg.setAllowedMethods(Collections.singletonList("*"));
                     cfg.setAllowCredentials(true);
